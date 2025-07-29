@@ -9,6 +9,7 @@ import MeetingCoverScene from '@/components/MeetingCoverScene';
 import M1Q1Scene from '@/components/M1Q1Scene';
 import M1Q2Scene from '@/components/M1Q2Scene';
 import M1Q3Scene from '@/components/M1Q3Scene';
+import MeetingTransitionPopup from '@/components/MeetingTransitionPopup';
 import Meeting2CoverScene from '@/components/Meeting2CoverScene';
 import M2Q1Scene from '@/components/M2Q1Scene';
 import M2Q2Scene from '@/components/M2Q2Scene';
@@ -88,6 +89,10 @@ export default function Home() {
   };
 
   const handleM1Q3Next = () => {
+    setCurrentScene('meeting-transition');
+  };
+
+  const handleMeetingTransitionNext = () => {
     setCurrentScene('meeting2-cover');
   };
 
@@ -195,10 +200,16 @@ export default function Home() {
         />
       )}
       {currentScene === 'm1q3' && (
-        <M1Q3Scene
+        <M1Q3Scene 
           userName={userData.name}
           onBack={handleM1Q3Back}
           onNext={handleM1Q3Next}
+        />
+      )}
+      {currentScene === 'meeting-transition' && (
+        <MeetingTransitionPopup
+          userName={userData.name}
+          onNext={handleMeetingTransitionNext}
         />
       )}
       {currentScene === 'meeting2-cover' && (
