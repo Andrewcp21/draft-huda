@@ -18,6 +18,12 @@ import M2Q4Scene from '@/components/M2Q4Scene';
 import M2Q5Scene from '@/components/M2Q5Scene';
 import M2Q6Scene from '@/components/M2Q6Scene';
 import M2Q7Scene from '@/components/M2Q7Scene';
+import M2ToM3TransitionPopup from '@/components/M2ToM3TransitionPopup';
+import Meeting3CoverScene from '@/components/Meeting3CoverScene';
+import M3Q1Scene from '@/components/M3Q1Scene';
+import M3Q2Scene from '@/components/M3Q2Scene';
+import M3Q3Scene from '@/components/M3Q3Scene';
+import ClosingScene from '@/components/ClosingScene';
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -171,8 +177,53 @@ export default function Home() {
   const handleM2Q7Next = (selectedOption: string | null) => {
     console.log('M2Q7 - Next button clicked');
     console.log('Selected option:', selectedOption);
-    console.log('All questions completed');
-    // You can add completion logic here if needed
+    setCurrentScene('m2tom3-transition');
+  };
+
+  const handleM2ToM3TransitionNext = () => {
+    setCurrentScene('meeting3-cover');
+  };
+
+  const handleMeeting3CoverBack = () => {
+    setCurrentScene('m2tom3-transition');
+  };
+
+  const handleMeeting3CoverNext = () => {
+    console.log('Meeting 3 cover - Next button clicked');
+    setCurrentScene('m3q1');
+  };
+
+  const handleM3Q1Back = () => {
+    setCurrentScene('meeting3-cover');
+  };
+
+  const handleM3Q1Next = () => {
+    console.log('M3Q1 - Next button clicked');
+    setCurrentScene('m3q2');
+  };
+
+  const handleM3Q2Back = () => {
+    setCurrentScene('m3q1');
+  };
+
+  const handleM3Q2Next = (feedback: string | null) => {
+    console.log('M3Q2 - Next button clicked');
+    console.log('Feedback:', feedback);
+    setCurrentScene('m3q3');
+  };
+
+  const handleM3Q3Back = () => {
+    setCurrentScene('m3q2');
+  };
+
+  const handleM3Q3Next = (feedback: string | null) => {
+    console.log('M3Q3 - Next button clicked');
+    console.log('Feedback:', feedback);
+    setCurrentScene('closing');
+  };
+
+  const handleClosingBack = () => {
+    setCurrentScene('m3q3');
   };
 
   return (
@@ -279,6 +330,45 @@ export default function Home() {
           userName={userData.name}
           onBack={handleM2Q7Back}
           onNext={handleM2Q7Next}
+        />
+      )}
+      {currentScene === 'm2tom3-transition' && (
+        <M2ToM3TransitionPopup
+          userName={userData.name}
+          onNext={handleM2ToM3TransitionNext}
+        />
+      )}
+      {currentScene === 'meeting3-cover' && (
+        <Meeting3CoverScene
+          userName={userData.name}
+          onBack={handleMeeting3CoverBack}
+          onNext={handleMeeting3CoverNext}
+        />
+      )}
+      {currentScene === 'm3q1' && (
+        <M3Q1Scene
+          onBack={handleM3Q1Back}
+          onNext={handleM3Q1Next}
+          userName={userData.name}
+        />
+      )}
+      {currentScene === 'm3q2' && (
+        <M3Q2Scene
+          onBack={handleM3Q2Back}
+          onNext={handleM3Q2Next}
+          userName={userData.name}
+        />
+      )}
+      {currentScene === 'm3q3' && (
+        <M3Q3Scene
+          onBack={handleM3Q3Back}
+          onNext={handleM3Q3Next}
+          userName={userData.name}
+        />
+      )}
+      {currentScene === 'closing' && (
+        <ClosingScene
+          userName={userData.name}
         />
       )}
     </main>
