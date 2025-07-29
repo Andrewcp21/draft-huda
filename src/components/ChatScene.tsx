@@ -278,7 +278,7 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
       )}
 
       <QuizResultPopup isVisible={showInvitation} onClose={handleProceedToMeeting}>
-        <div className="bg-white rounded-2xl w-full max-w-md mx-4 overflow-hidden">
+        <div className="bg-white rounded-2xl w-full max-w-md overflow-hidden">
           {/* Header */}
           <div className="bg-[#FFDE3D] p-4 flex justify-between items-center">
             <h3 className="text-lg font-bold">Meeting 1</h3>

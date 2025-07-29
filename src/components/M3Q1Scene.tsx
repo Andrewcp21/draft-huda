@@ -12,8 +12,8 @@ const M3Q1Scene: React.FC<M3Q1SceneProps> = ({ userName, onBack, onNext }) => {
   // Array of speech bubble texts with markdown-style bold formatting
   const speechBubbles = [
     "Nah, jadi minggu depan kami mau membuat **Festival Mekar & Kopi Musim Semi** nih.",
-    "Tujuannya untuk terus meningkatkan pengunjung ke toko kami terutama anak-anak muda. Disana nanti mereka bisa menikmati kopi di tengah taman bunga.",
-    "Akan ada festival musik juga yang dihadiri beberapa musisi lokal favorit. Kami juga akan mengadakan undian berhadiah yang bisa pengunjung menangkan."
+    "Disana nanti anak-anak muda bisa menikmati kopi di tengah taman bunga.",
+    "Ada festival musik, undian berhadiah dan lainnya supaya pengunjung meningkat!"
   ];
 
   // State to track visible bubbles
@@ -57,90 +57,65 @@ const M3Q1Scene: React.FC<M3Q1SceneProps> = ({ userName, onBack, onNext }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FFDE3D] relative overflow-hidden">
-      {/* Yellow background shape */}
-      {/* Yellow background */}
-      <div className="absolute inset-0 bg-[#FFDE3D] -z-10" />
-      
-      {/* White shape at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-white rounded-t-3xl -z-5" />
-      
-      {/* Content container */}
-      <div className="flex-grow flex flex-col p-6 pt-16">
-        {/* Logo */}
-        <div className="mb-8">
-          <Image 
-            src="/logorevou.png" 
-            alt="RevoU Logo" 
-            width={60} 
-            height={60}
-            className="mx-auto"
-            priority
-          />
-        </div>
-
+    <div 
+      className="h-screen flex flex-col bg-[#FFDE3D] relative overflow-hidden"
+      style={{
+        backgroundImage: `url('/logorevou.png')`,
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'contain',
+      }}
+    >
+      {/* Main Content Area */}
+      <div className="relative z-10 flex-grow flex flex-col w-full max-w-md mx-auto px-4 pt-8 pb-4 overflow-y-auto">
         {/* Speech bubbles container */}
-        <div className="w-full max-w-md mx-auto space-y-4 mb-8">
+        <div className="w-full space-y-4 mb-6 flex-shrink-0 pt-8">
           {speechBubbles.map((text, index) => (
             <div
               key={index}
-              className={`
-                bg-white p-4 rounded-xl shadow-md relative
-                transition-all duration-300 ease-in-out
-                ${index < visibleBubblesCount ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 h-0 overflow-hidden'}
-                transition-delay: ${index * 0.2}s;
-                ${index === 0 ? 'mt-0' : 'mt-4'}
-              `}
+              className={`bg-white p-4 rounded-xl shadow-md relative transition-all duration-500 ease-out transform ${index < visibleBubblesCount ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <p className="text-gray-800 text-base leading-relaxed">
+              <p className="text-gray-800 text-base leading-relaxed font-medium">
                 {renderTextWithBold(text)}
               </p>
               {/* Speech bubble tail */}
-              <div
-                className="absolute -bottom-2 left-6 w-4 h-4 bg-white transform rotate-45"
-                style={{
-                  boxShadow: '2px 2px 2px rgba(0,0,0,0.1)'
-                }}
-              />
+              <div className="absolute -bottom-2 left-6 w-4 h-4 bg-white transform rotate-45 shadow-md" />
             </div>
           ))}
         </div>
 
         {/* Character illustration */}
         <div className="flex-grow flex items-end justify-center">
-          <div className="relative w-full max-w-xs">
+          <div className="relative w-full max-w-xs mx-auto">
             <Image
               src="/GIF/ezgif.com-animated-gif-maker-6.gif"
               alt="Character speaking"
               width={320}
               height={320}
-              className="mx-auto"
+              className="mx-auto object-contain"
             />
           </div>
         </div>
       </div>
 
-      {/* Navigation buttons */}
-      <div className="p-6 bg-white border-t border-gray-200">
-        <div className="flex flex-row gap-4 w-full max-w-md mx-auto">
+      {/* Bottom Navigation */}
+      <div className="w-full max-w-md mx-auto p-4 z-10 bg-white border-t border-gray-200">
+        <div className="flex flex-row gap-4 w-full">
           <button 
             onClick={handleBack}
-            className="h-12 w-12 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center flex-none"
+            className="h-12 w-12 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg transition duration-200 flex items-center justify-center flex-none shadow-sm"
             aria-label="Kembali"
           >
-            <FaArrowLeft className="text-white w-4 h-4" />
+            <FaArrowLeft className="w-4 h-4" />
           </button>
           <button 
             onClick={handleNext}
-            disabled={visibleBubblesCount < speechBubbles.length}
-            className={`flex-1 h-12 font-semibold rounded-lg transition duration-200 flex items-center justify-center
-              ${visibleBubblesCount < speechBubbles.length 
-                ? 'bg-gray-400 text-gray-200 cursor-not-allowed' 
-                : 'bg-red-600 hover:bg-red-700 text-white'}`}
+            className={`flex-1 h-12 font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-md ${visibleBubblesCount < speechBubbles.length ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-red-600 hover:bg-red-700 text-white'}`}
             aria-label={visibleBubblesCount < speechBubbles.length ? 'Tunggu hingga semua pesan selesai' : 'Lanjut'}
           >
             {visibleBubblesCount < speechBubbles.length ? 'Mengetik...' : 'Lanjut'}
-            {visibleBubblesCount >= speechBubbles.length && <FaArrowRight className="ml-2 w-4 h-4" />}
+            {visibleBubblesCount >= speechBubbles.length && <FaArrowRight className="w-4 h-4" />}
           </button>
         </div>
       </div>

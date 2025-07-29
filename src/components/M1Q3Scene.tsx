@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import Image from 'next/image';
 import styles from './M1Q3Scene.module.css';
 import QuizResultPopup from './QuizResultPopup';
 
@@ -109,74 +110,74 @@ const M1Q3Scene: React.FC<M1Q3SceneProps> = ({ userName, onBack, onNext }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center relative overflow-hidden bg-[#FFDE3D] pt-20">
+    <div className="h-screen w-full flex flex-col bg-[#FFDE3D] relative overflow-hidden">
       <div className={`${styles.notificationBar} ${isVisible ? styles.slideIn : ''} w-full bg-red-600 text-white p-4 fixed top-0 left-0 right-0 z-20`}>
-          <div className="max-w-md mx-auto">
-              <div className="flex items-start gap-3">
-                  <div className="bg-white p-2 rounded-full flex-shrink-0">
-                      <span className="text-2xl">🤔</span>
-                  </div>
-                  <p className="text-sm font-medium flex-1 text-left">
-                      Sekarang, coba pilih komponen iklan yang paling penting untuk Google Search Ads. Drag and drop jawabanmu!
-                  </p>
-              </div>
+        <div className="max-w-md mx-auto">
+          <div className="flex items-start gap-3">
+            <div className="bg-white p-2 rounded-full flex-shrink-0">
+              <span className="text-xl sm:text-2xl">🤔</span>
+            </div>
+            <p className="text-base font-medium flex-1 text-left">
+              Temukan kombinasi paling tepat. Drag & Drop pilihanmu.
+            </p>
           </div>
+        </div>
       </div>
 
-      <div className="w-full max-w-md mx-auto text-center relative z-10 px-4 pt-4">
-        <div className="bg-white rounded-2xl p-6 shadow-lg mb-8">
-            <p className="text-gray-700 text-lg mb-6 text-left">
-                Dari semua pilihan ini, mana 2 (dua) komponen yang WAJIB ada di setiap iklan Google Search Ads?
-            </p>
+      {/* Main Content Area */}
+      <div className="flex-grow w-full max-w-md mx-auto flex flex-col pt-20 px-4 pb-4 overflow-y-auto">
+        <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 flex-grow flex flex-col">
+          <p className="text-center text-gray-800 font-semibold mb-4">
+            Oh Google ya! Saya pernah dengar sih iklan di Google Search, bentuk iklan-nya yang pasti tampil apa ya? Pilih 2 dari opsi berikut:
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 mb-6">
+            {options.map((option) => (
+              <div
+                key={option.id}
+                draggable={!option.dropped}
+                onDragStart={(e) => handleDragStart(e, option.id)}
+                className={`py-2 px-4 rounded-lg font-semibold transition-all duration-200 ease-in-out shadow-md ${ 
+                  option.dropped 
+                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-60'
+                  : 'bg-pink-500 text-white cursor-grab hover:bg-pink-600 active:scale-95 active:cursor-grabbing'
+                }`}>
+                {option.text}
+              </div>
+            ))}
+          </div>
 
-            {/* Draggable Options */}
-            <div className="flex flex-wrap justify-center gap-3 mb-6">
-                {options.map((option) => (
-                    <div
-                        key={option.id}
-                        draggable={!option.dropped}
-                        onDragStart={(e) => handleDragStart(e, option.id)}
-                        className={`py-2 px-4 rounded-lg font-semibold transition-all duration-200 ease-in-out shadow-md ${ 
-                            option.dropped 
-                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-60'
-                            : 'bg-pink-500 text-white cursor-grab hover:bg-pink-600 active:scale-95 active:cursor-grabbing'
-                        }`}>
-                        {option.text}
-                    </div>
-                ))}
-            </div>
-
-            {/* Drop Slots */}
-            <div className="flex items-center justify-center w-full space-x-4 mb-4">
-                {dropSlots.map((slot, index) => (
-                    <React.Fragment key={slot.id}>
-                        <div
-                            onDragOver={handleDragOver}
-                            onDrop={(e) => handleDrop(e, slot.id)}
-                            className="bg-gray-100 border-2 border-dashed border-gray-400 text-gray-500 text-lg font-medium py-6 rounded-xl w-1/2 h-24 flex items-center justify-center text-center transition-colors duration-200 hover:border-blue-500">
-                            {slot.content ? (
-                                <span className="text-gray-800 font-bold">{slot.content.text}</span>
-                            ) : (
-                                'Drop di sini'
-                            )}
-                        </div>
-                        {index === 0 && <span className="text-gray-800 text-2xl font-semibold">+</span>}
-                    </React.Fragment>
-                ))}
-            </div>
+          <div className="flex items-center justify-center w-full space-x-4 my-auto">
+            {dropSlots.map((slot, index) => (
+              <React.Fragment key={slot.id}>
+                <div
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, slot.id)}
+                  className="bg-gray-100 border-2 border-dashed border-gray-400 text-gray-500 text-sm sm:text-lg font-medium py-6 rounded-xl w-1/2 h-24 flex items-center justify-center text-center transition-colors duration-200 hover:border-blue-500">
+                  {slot.content ? (
+                    <span className="text-gray-800 font-bold p-2">{slot.content.text}</span>
+                  ) : (
+                    'Drop di sini'
+                  )}
+                </div>
+                {index === 0 && <span className="text-gray-800 text-2xl font-semibold">+</span>}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
+      </div>
 
-        {/* Navigation Buttons */}
-        <div className="flex flex-row gap-4 w-full max-w-xs mx-auto mb-4">
+      {/* Bottom Navigation */}
+      <div className="w-full max-w-md mx-auto p-4 z-10 bg-[#FFDE3D] flex-shrink-0">
+        <div className="flex flex-row gap-4 w-full">
           <button 
             onClick={onBack}
-            className="h-12 w-12 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg transition duration-200 flex items-center justify-center flex-none">
+            className="h-12 w-12 bg-white hover:bg-gray-100 text-gray-800 font-semibold rounded-lg transition duration-200 flex items-center justify-center flex-none shadow-md">
             <FaArrowLeft className="w-4 h-4" />
           </button>
           <button 
             onClick={onNext}
             disabled={!isCorrect}
-            className={`flex-1 h-12 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center gap-2 ${isCorrect ? 'bg-red-600 hover:bg-red-700' : 'bg-gray-400 cursor-not-allowed'}`}>
+            className={`flex-1 h-12 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow-md ${isCorrect ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-400 cursor-not-allowed'}`}>
             Selanjutnya
             <FaArrowRight className="w-4 h-4" />
           </button>
@@ -184,25 +185,28 @@ const M1Q3Scene: React.FC<M1Q3SceneProps> = ({ userName, onBack, onNext }) => {
       </div>
 
       <QuizResultPopup isVisible={showPopup !== 'none'} onClose={() => setShowPopup('none')}>
-        <div className="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 text-center">
+        <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-sm w-full mx-4 text-center shadow-2xl">
           {showPopup === 'correct' ? (
             <>
-              <img src="/GIF/ezgif.com-animated-gif-maker-8.gif" alt="Correct" className="mx-auto mb-4 w-24 h-24" />
-              <p className="text-gray-700 mb-6">
-                Betul! <strong>Headline</strong> dan <strong>Description</strong> adalah pondasi utama dari setiap iklan di Google Search. Keduanya yang pertama kali dilihat pelanggan!
+              <div className="relative w-24 h-24 mx-auto mb-4">
+                <Image src="/GIF/ezgif.com-animated-gif-maker-8.gif" alt="Correct" layout="fill" objectFit="contain" unoptimized />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Kerja Bagus!</h3>
+              <p className="text-gray-600 mb-6">
+                Betul! <strong>Headline</strong> dan <strong>Description</strong> adalah pondasi utama dari setiap iklan di Google Search.
               </p>
               <button
                 onClick={onNext}
-                className="w-full bg-red-600 text-white py-3 px-6 rounded-lg font-semibold flex items-center justify-center gap-2">
+                className="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-full font-bold flex items-center justify-center gap-2 transition duration-300 transform hover:scale-105 shadow-lg">
                 Luar biasa! <FaArrowRight />
               </button>
             </>
           ) : (
             <>
-              <p className="text-gray-700 text-lg font-bold mb-4">
-                🥲Oops, belum tepat!
+              <p className="text-red-500 text-lg font-bold mb-4">
+                Oops, belum tepat!
               </p>
-              <p className="text-gray-700">
+              <p className="text-gray-600">
                   Coba lagi ya, kamu pasti bisa!
               </p>
             </>

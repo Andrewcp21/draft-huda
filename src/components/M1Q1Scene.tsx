@@ -51,29 +51,29 @@ const M1Q1Scene: React.FC<M1Q1SceneProps> = ({ userName, onBack, onNext }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center relative overflow-hidden bg-[#FFDE3D] pt-20">
+    <div className="h-screen w-full flex flex-col bg-[#FFDE3D] relative overflow-hidden">
       {/* Animated notification bar */}
       <div className={`${styles.notificationBar} ${isVisible ? styles.slideIn : ''} w-full bg-red-600 text-white p-4 fixed top-0 left-0 right-0 z-20`}>
         <div className="max-w-md mx-auto">
           <div className="flex items-start gap-3">
             <div className="bg-white p-2 rounded-full flex-shrink-0">
-              <span className="text-2xl">🖐️</span>
+              <span className="text-xl sm:text-2xl">🖐️</span>
             </div>
             <p className="text-sm font-medium flex-1 text-left">
-            Semangat! Jangan takut salah, selamat mengerjakan!
+              Semangat! Jangan takut salah, selamat mengerjakan!
             </p>
           </div>
         </div>
       </div>
 
-      <div className="w-full max-w-md mx-auto text-center relative z-10 px-4 pt-4">
-        <div className="bg-white rounded-2xl p-6 shadow-lg mb-8">
-          <p className="text-gray-700 text-lg mb-6 text-center">
+      {/* Main Content Area */}
+      <div className="flex-grow w-full max-w-md mx-auto flex flex-col pt-20 px-4 pb-4 overflow-y-auto">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg flex-grow flex flex-col">
+          <p className="text-gray-800 text-base sm:text-lg mb-4 text-center font-medium">
             Kami punya banyak foto dan video produk yang bagus-bagus nih di Kafe Kami.
           </p>
 
-          {/* Single Image */}
-          <div className="relative w-full h-64 mb-6 rounded-xl overflow-hidden shadow-lg">
+          <div className="relative w-full h-48 sm:h-64 mb-4 rounded-xl overflow-hidden bg-gray-100">
             <Image
               src="/M1Q1/img13.png"
               alt="Cafe Products"
@@ -83,12 +83,11 @@ const M1Q1Scene: React.FC<M1Q1SceneProps> = ({ userName, onBack, onNext }) => {
             />
           </div>
 
-          <p className="text-gray-700 text-lg mb-6 text-center">
+          <p className="text-gray-800 text-base sm:text-lg mb-4 text-center font-medium">
             Media Sosial mana sih yang paling cocok buat kami pamer foto dan video yang indah ini?
           </p>
           
-          {/* Social Media Options */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-2 gap-4 mt-auto">
             {[
               { id: 'instagram', name: 'Instagram', logo: '/M1Q1/Instagram_icon.png' },
               { id: 'linkedin', name: 'LinkedIn', logo: '/M1Q1/LinkedIn_logo_initials.png' },
@@ -99,15 +98,15 @@ const M1Q1Scene: React.FC<M1Q1SceneProps> = ({ userName, onBack, onNext }) => {
                 key={platform.id}
                 onClick={() => handleAnswer(platform.id)}
                 disabled={isSubmitting}
-                className={`p-4 rounded-xl flex flex-col items-center justify-center transition-all duration-300 transform hover:scale-105 ${
+                className={`p-3 sm:p-4 rounded-xl flex flex-col items-center justify-center transition-all duration-200 shadow-md transform hover:scale-105 ${
                   selectedOption === platform.id
                     ? platform.id === 'instagram'
-                      ? 'ring-4 ring-green-500 bg-green-100 shadow-lg'
-                      : 'ring-4 ring-red-500 bg-red-100 shadow-lg'
-                    : 'bg-gray-50 hover:bg-gray-100 shadow-md'
-                } ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      ? 'ring-2 ring-green-500 bg-green-50'
+                      : 'ring-2 ring-red-500 bg-red-50'
+                    : 'bg-gray-50 hover:bg-gray-100'
+                } ${isSubmitting && selectedOption !== platform.id ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                <div className="relative w-16 h-16 mb-2">
+                <div className="relative w-12 h-12 sm:w-16 sm:h-16 mb-2">
                   <Image
                     src={platform.logo}
                     alt={platform.name}
@@ -115,47 +114,50 @@ const M1Q1Scene: React.FC<M1Q1SceneProps> = ({ userName, onBack, onNext }) => {
                     objectFit="contain"
                   />
                 </div>
-                <span className="text-sm font-semibold text-gray-800 text-center">
+                <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
                   {platform.name}
                 </span>
               </button>
             ))}
           </div>
         </div>
+      </div>
         
-        {/* Navigation Buttons */}
-        <div className="flex flex-row gap-4 w-full max-w-xs mx-auto mb-4">
+      {/* Bottom Navigation */}
+      <div className="w-full max-w-md mx-auto p-4 z-10 bg-[#FFDE3D]">
+        <div className="flex flex-row gap-4 w-full">
           <button
             onClick={onBack}
-            className="h-12 w-12 bg-white hover:bg-gray-100 text-gray-800 font-bold rounded-full transition duration-300 flex items-center justify-center flex-none shadow-md transform hover:scale-110"
+            className="h-12 w-12 bg-white hover:bg-gray-100 text-gray-800 font-semibold rounded-lg transition duration-200 flex items-center justify-center flex-none shadow-md"
           >
-            <FaArrowLeft className="w-5 h-5" />
+            <FaArrowLeft className="w-4 h-4" />
           </button>
           <button
             onClick={handleNext}
-            disabled={!selectedOption || selectedOption !== 'instagram'}
-            className={`flex-1 h-12 text-white font-bold rounded-full transition duration-300 flex items-center justify-center gap-2 shadow-lg transform hover:scale-105 ${
+            disabled={selectedOption !== 'instagram'}
+            className={`flex-1 h-12 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow-md ${
               selectedOption === 'instagram'
                 ? 'bg-green-500 hover:bg-green-600'
-                : 'bg-gray-400 cursor-not-allowed opacity-70'
+                : 'bg-gray-400 cursor-not-allowed'
             }`}
           >
             Selanjutnya
-            <FaArrowRight className="w-5 h-5" />
+            <FaArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>
 
       <QuizResultPopup isVisible={showPopup !== 'none'} onClose={() => setShowPopup('none')}>
-        <div className="bg-white rounded-2xl p-8 max-w-sm w-full mx-4 shadow-2xl">
+        <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-sm w-full shadow-2xl">
           {showPopup === 'correct' ? (
             <div className="text-center">
               <div className="relative w-24 h-24 mx-auto mb-4">
                 <Image
                   src="/GIF/ezgif.com-animated-gif-maker-8.gif"
                   alt="Correct Answer Illustration"
-                  layout="fill"
-                  objectFit="contain"
+                  fill
+                  sizes="96px"
+                  className="object-contain"
                 />
               </div>
               <h3 className="text-xl font-bold text-gray-800 mb-2">Kerja Bagus!</h3>

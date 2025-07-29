@@ -5,7 +5,7 @@ import QuizResultPopup from './QuizResultPopup';
 
 interface RegistrationSceneProps {
   onBack: () => void;
-  onRegisterSuccess: () => void;
+  onRegisterSuccess: (data: { name: string; email: string }) => void;
 }
 
 const RegistrationScene: React.FC<RegistrationSceneProps> = ({ onBack, onRegisterSuccess }) => {
@@ -35,30 +35,29 @@ const RegistrationScene: React.FC<RegistrationSceneProps> = ({ onBack, onRegiste
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start pt-12 bg-[#FFDE3D] p-4 relative">
-      {/* Remove the yellow shape since we're making the whole background yellow */}
-      
-      {/* Headline */}
-      <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-        Kenalan dulu yuk!
-      </h2>
-      
-      {/* Animated GIF */}
-      <div className="w-full max-w-xs mx-auto mb-8">
-        <Image
-          src="/GIF/ezgif.com-animated-gif-maker-5.gif"
-          alt="Registration"
-          width={400}
-          height={300}
-          className="w-full h-auto"
-          priority
-        />
+    <div className="h-screen w-full flex flex-col items-center justify-between bg-[#FFDE3D] p-4 relative overflow-hidden">
+      <div className="w-full max-w-md mx-auto text-center flex flex-col items-center justify-center flex-grow px-4">
+        {/* Headline */}
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 px-2">
+          Kenalan dulu yuk!
+        </h2>
+        
+        {/* Animated GIF */}
+        <div className="w-full max-w-[280px] sm:max-w-[320px] mx-auto my-4 sm:my-6 aspect-square relative">
+          <Image
+            src="/GIF/ezgif.com-animated-gif-maker-5.gif"
+            alt="Registration"
+            fill
+            sizes="(max-width: 640px) 240px, 280px"
+            className="object-contain"
+            priority
+          />
+        </div>
       </div>
-      
+
       {/* Form Box */}
-      <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
-          
-          <form onSubmit={handleSubmit} className="mt-6 space-y-6">
+      <div className="w-full max-w-md mx-auto bg-white rounded-t-2xl shadow-lg p-6 sm:p-8">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                 Nama
@@ -91,7 +90,7 @@ const RegistrationScene: React.FC<RegistrationSceneProps> = ({ onBack, onRegiste
               />
             </div>
             
-            <div className="flex flex-row items-center gap-4 pt-4 mb-4">
+            <div className="flex flex-row items-center gap-4 pt-2">
               <button
                 type="button"
                 onClick={onBack}
@@ -112,7 +111,7 @@ const RegistrationScene: React.FC<RegistrationSceneProps> = ({ onBack, onRegiste
       </div>
 
       <QuizResultPopup isVisible={showSuccessPopup} onClose={handleProceed}>
-        <div className="bg-white rounded-2xl w-full max-w-md mx-4 overflow-hidden border border-gray-200 shadow-xl">
+        <div className="bg-white rounded-2xl w-full max-w-md overflow-hidden border border-gray-200 shadow-xl">
           {/* Header */}
           <div className="bg-[#FFDE3D] p-4 flex justify-between items-center">
             <h3 className="text-lg font-bold">Yeay, berhasil!</h3>

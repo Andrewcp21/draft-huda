@@ -10,65 +10,65 @@ interface Meeting2CoverSceneProps {
 
 const Meeting2CoverScene: React.FC<Meeting2CoverSceneProps> = ({ userName, onBack, onNext }) => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-white relative overflow-hidden">
+    <div className="h-screen w-full flex flex-col bg-white relative overflow-hidden">
       {/* Yellow background shape */}
-      <div className="absolute inset-0 bg-[#FFDE3D] -z-10" style={{
-        clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%)'
-      }} />
-      
-      <div className="w-full max-w-md mx-auto text-center relative z-10">
+      <div className="absolute top-0 left-0 right-0 h-1/2 bg-[#FFDE3D] -z-10" />
+
+      {/* Main Content Area */}
+      <div className="flex-grow w-full max-w-md mx-auto flex flex-col items-center justify-center text-center overflow-y-auto p-4 pt-8">
         {/* Logo */}
-        <div className="mb-8">
+        <div className="w-20 h-20 relative mb-4 flex-shrink-0">
           <Image 
             src="/logorevou.png" 
             alt="RevoU Logo" 
-            width={80} 
-            height={80}
-            className="mx-auto"
+            layout="fill"
+            objectFit="contain"
           />
         </div>
 
         {/* Meeting Badge */}
-        <div className="px-4 py-2 bg-[#FFDE3D] rounded-full inline-block mb-6">
-          <span className="text-black text-lg font-bold">
+        <div className="px-4 py-2 bg-[#FFDE3D] rounded-full inline-block mb-4 shadow-md flex-shrink-0">
+          <span className="text-black text-base sm:text-lg font-bold">
             Meeting 2
           </span>
         </div>
         
         {/* Title */}
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 flex-shrink-0">
           Logical & Analytical
         </h1>
         
         {/* Animated GIF */}
-        <div className="mb-8 max-w-xs mx-auto">
+        <div className="w-full max-w-[280px] aspect-square relative mb-4 flex-shrink-0">
           <Image
             src="/GIF/ezgif.com-animated-gif-maker-7.gif"
             alt="Logical & Analytical"
-            width={320}
-            height={320}
-            className="mx-auto"
+            layout="fill"
+            objectFit="contain"
             priority
+            unoptimized
           />
         </div>
         
         {/* Greeting */}
-        <p className="text-gray-600 text-lg mb-8">
+        <p className="text-gray-700 text-base sm:text-lg px-4 flex-shrink-0">
           Halo lagi <span className="font-bold text-black">{userName}</span>!<br />
           Terima kasih banyak atas penjelasan di meeting kemarin ya. Nah, ini kabar terbaru. Kami sudah coba menjalankan iklan di Facebook & Google. Tolong bantu aku mengerti tentang hasil iklan kami ya!
         </p>
-        
-        {/* Navigation Buttons */}
-        <div className="flex flex-row gap-4 w-full max-w-xs mx-auto mb-4">
+      </div>
+      
+      {/* Bottom Navigation */}
+      <div className="w-full max-w-md mx-auto p-4 z-10 bg-white flex-shrink-0">
+        <div className="flex flex-row gap-4 w-full">
           <button 
             onClick={onBack}
-            className="h-12 w-12 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center flex-none"
+            className="h-12 w-12 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg transition duration-200 flex items-center justify-center flex-none shadow-md"
           >
-            <FaArrowLeft className="text-white w-4 h-4" />
+            <FaArrowLeft className="w-4 h-4" />
           </button>
           <button 
             onClick={onNext}
-            className="flex-1 h-12 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center"
+            className="flex-1 h-12 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center shadow-md"
           >
             Selanjutnya
           </button>
