@@ -17,6 +17,7 @@ import M2Q3Scene from '@/components/M2Q3Scene';
 import M2Q4Scene from '@/components/M2Q4Scene';
 import M2Q5Scene from '@/components/M2Q5Scene';
 import M2Q6Scene from '@/components/M2Q6Scene';
+import M2Q7Scene from '@/components/M2Q7Scene';
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -156,8 +157,20 @@ export default function Home() {
     setCurrentScene('m2q5');
   };
 
-  const handleM2Q6Next = () => {
+  const handleM2Q6Next = (selectedOption: string | null) => {
     console.log('M2Q6 - Next button clicked');
+    console.log('Selected option:', selectedOption);
+    setCurrentScene('m2q7');
+  };
+
+  const handleM2Q7Back = () => {
+    console.log('M2Q7 - Back button clicked');
+    setCurrentScene('m2q6');
+  };
+
+  const handleM2Q7Next = (selectedOption: string | null) => {
+    console.log('M2Q7 - Next button clicked');
+    console.log('Selected option:', selectedOption);
     console.log('All questions completed');
     // You can add completion logic here if needed
   };
@@ -259,6 +272,13 @@ export default function Home() {
           userName={userData.name}
           onBack={handleM2Q6Back}
           onNext={handleM2Q6Next}
+        />
+      )}
+      {currentScene === 'm2q7' && (
+        <M2Q7Scene
+          userName={userData.name}
+          onBack={handleM2Q7Back}
+          onNext={handleM2Q7Next}
         />
       )}
     </main>
