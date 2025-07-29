@@ -14,11 +14,18 @@ import M2Q1Scene from '@/components/M2Q1Scene';
 import M2Q2Scene from '@/components/M2Q2Scene';
 import M2Q3Scene from '@/components/M2Q3Scene';
 import M2Q4Scene from '@/components/M2Q4Scene';
+import M2Q5Scene from '@/components/M2Q5Scene';
+import M2Q6Scene from '@/components/M2Q6Scene';
 
 export default function Home() {
   const searchParams = useSearchParams();
   const [currentScene, setCurrentScene] = useState('welcome');
   const [userData, setUserData] = useState({ name: '', email: '' });
+
+  // Log scene changes for debugging
+  useEffect(() => {
+    console.log(`Scene changed to: ${currentScene}`);
+  }, [currentScene]);
 
   // Handle URL parameters on initial load
   useEffect(() => {
@@ -121,8 +128,33 @@ export default function Home() {
   };
 
   const handleM2Q4Next = (selectedOption: string | null) => {
-    console.log('Selected option from M2Q4:', selectedOption);
-    // Handle navigation to the next scene after M2Q4
+    console.log('M2Q4 - Next button clicked, selected option:', selectedOption);
+    console.log('Navigating to M2Q5');
+    setCurrentScene('m2q5');
+  };
+
+  const handleM2Q5Back = () => {
+    console.log('M2Q5 - Back button clicked');
+    console.log('Navigating back to M2Q4');
+    setCurrentScene('m2q4');
+  };
+
+  const handleM2Q5Next = () => {
+    console.log('M2Q5 - Next button clicked');
+    console.log('Navigating to M2Q6');
+    setCurrentScene('m2q6');
+  };
+
+  const handleM2Q6Back = () => {
+    console.log('M2Q6 - Back button clicked');
+    console.log('Navigating back to M2Q5');
+    setCurrentScene('m2q5');
+  };
+
+  const handleM2Q6Next = () => {
+    console.log('M2Q6 - Next button clicked');
+    console.log('All questions completed');
+    // You can add completion logic here if needed
   };
 
   return (
@@ -202,6 +234,20 @@ export default function Home() {
           userName={userData.name}
           onBack={handleM2Q4Back}
           onNext={handleM2Q4Next}
+        />
+      )}
+      {currentScene === 'm2q5' && (
+        <M2Q5Scene
+          userName={userData.name}
+          onBack={handleM2Q5Back}
+          onNext={handleM2Q5Next}
+        />
+      )}
+      {currentScene === 'm2q6' && (
+        <M2Q6Scene
+          userName={userData.name}
+          onBack={handleM2Q6Back}
+          onNext={handleM2Q6Next}
         />
       )}
     </main>

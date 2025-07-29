@@ -41,10 +41,10 @@ const M2Q6Scene: React.FC<M2Q6SceneProps> = ({ userName, onBack, onNext }) => {
         <div className="max-w-md mx-auto">
           <div className="flex items-start gap-3">
             <div className="bg-white p-2 rounded-full flex-shrink-0">
-              <span className="text-2xl">🖐️</span>
+              <span className="text-2xl">🔍</span>
             </div>
             <p className="text-sm font-medium flex-1 text-left">
-              🙋‍♂️Sebentar lagi selesai loh! Disini kamu bisa pilih kata yang dicetak tebal untuk mendapatkan pentunjuk! 💟
+              Mana nih yang lebih menarik menurut kamu?
             </p>
           </div>
         </div>

@@ -118,13 +118,17 @@ const M2Q5Scene: React.FC<M2Q5SceneProps> = ({ userName, onBack, onNext }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center relative overflow-hidden bg-[#FFDE3D] pt-30">
-      <div className={`${styles.notificationBar} ${isVisible ? styles.slideIn : ''} w-full bg-red-600 text-white p-4 fixed top-0 left-0 right-0 z-20`}>
+    <div className="min-h-screen flex flex-col items-center relative overflow-hidden bg-[#FFDE3D] pt-20">
+      <div className={`${styles.notificationBar} ${isVisible ? styles.slideInM2Q5 : ''} w-full bg-red-600 text-white p-4 fixed top-0 left-0 right-0 z-20`}>
         <div className="max-w-md mx-auto">
-          <p className="text-center font-semibold">
-            💪Sedikit lagi nih! Ayo jangan menyerah!
-          </p>
-
+          <div className="flex items-start gap-3">
+            <div className="bg-white p-2 rounded-full flex-shrink-0">
+              <span className="text-2xl">💪</span>
+            </div>
+            <p className="text-sm font-medium flex-1 text-left">
+              Kamu pasti bisa! Ayo tinggal beberapa pertanyaan lagi loh
+            </p>
+          </div>
         </div>
       </div>
 
