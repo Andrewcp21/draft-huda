@@ -12,6 +12,8 @@ import M1Q3Scene from '@/components/M1Q3Scene';
 import Meeting2CoverScene from '@/components/Meeting2CoverScene';
 import M2Q1Scene from '@/components/M2Q1Scene';
 import M2Q2Scene from '@/components/M2Q2Scene';
+import M2Q3Scene from '@/components/M2Q3Scene';
+import M2Q4Scene from '@/components/M2Q4Scene';
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -103,8 +105,24 @@ export default function Home() {
   };
 
   const handleM2Q2Next = () => {
-    console.log('Proceeding from M2Q2');
-    // Handle navigation to the next scene after M2Q2
+    setCurrentScene('m2q3');
+  };
+
+  const handleM2Q3Back = () => {
+    setCurrentScene('m2q2');
+  };
+
+  const handleM2Q3Next = (selectedOption: string | null) => {
+    setCurrentScene('m2q4');
+  };
+
+  const handleM2Q4Back = () => {
+    setCurrentScene('m2q3');
+  };
+
+  const handleM2Q4Next = (selectedOption: string | null) => {
+    console.log('Selected option from M2Q4:', selectedOption);
+    // Handle navigation to the next scene after M2Q4
   };
 
   return (
@@ -170,6 +188,20 @@ export default function Home() {
           userName={userData.name}
           onBack={handleM2Q2Back}
           onNext={handleM2Q2Next}
+        />
+      )}
+      {currentScene === 'm2q3' && (
+        <M2Q3Scene
+          userName={userData.name}
+          onBack={handleM2Q3Back}
+          onNext={handleM2Q3Next}
+        />
+      )}
+      {currentScene === 'm2q4' && (
+        <M2Q4Scene
+          userName={userData.name}
+          onBack={handleM2Q4Back}
+          onNext={handleM2Q4Next}
         />
       )}
     </main>

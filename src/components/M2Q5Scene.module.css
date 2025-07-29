@@ -3,26 +3,28 @@
     transition: transform 0.5s ease-in-out;
 }
 
-@keyframes slideInM2Q2 {
+@keyframes slideInM2Q5 {
   from { transform: translateY(-100%); }
   to { transform: translateY(0); }
 }
 
-.slideIn {
-  animation: slideInM2Q2 0.5s ease-in-out forwards;
+.slideInM2Q5 {
+  animation: slideInM2Q5 0.5s ease-in-out forwards;
 }
 
 .calculator-button {
-    padding: 1rem;
-    border-radius: 9999px; /* rounded-full */
-    font-size: 1.5rem; /* text-2xl */
-    font-weight: 600; /* font-semibold */
+    height: 4rem; 
+    width: 4rem; 
+    font-size: 1.5rem; 
+    border-radius: 9999px; 
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* shadow-sm */
-    transition: transform 0.1s ease-in-out;
-    min-height: 60px;
+    transition: background-color 0.2s;
+}
+
+.calculator-button:hover {
+    filter: brightness(90%);
 }
 
 .calculator-button:active {
