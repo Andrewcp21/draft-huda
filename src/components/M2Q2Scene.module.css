@@ -1,0 +1,40 @@
+.notificationBar {
+    transform: translateY(-100%);
+    transition: transform 0.5s ease-in-out;
+}
+
+@keyframes slideInM2Q2 {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+.slideIn {
+  animation: slideInM2Q2 0.5s ease-in-out forwards;
+}
+
+.calculator-button {
+    height: 4rem; 
+    width: 4rem; 
+    font-size: 1.5rem; 
+    border-radius: 1.5rem; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.calculator-button:hover {
+    filter: brightness(90%);
+}
+
+.calculator-button:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 380px) {
+    .calculator-button {
+        height: 3.5rem;
+        width: 3.5rem;
+        font-size: 1.25rem;
+    }
+}

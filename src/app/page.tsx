@@ -1,103 +1,177 @@
-import Image from "next/image";
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import WelcomeScene from '@/components/WelcomeScene';
+import RegistrationScene from '@/components/RegistrationScene';
+import ChatScene from '@/components/ChatScene';
+import MeetingCoverScene from '@/components/MeetingCoverScene';
+import M1Q1Scene from '@/components/M1Q1Scene';
+import M1Q2Scene from '@/components/M1Q2Scene';
+import M1Q3Scene from '@/components/M1Q3Scene';
+import Meeting2CoverScene from '@/components/Meeting2CoverScene';
+import M2Q1Scene from '@/components/M2Q1Scene';
+import M2Q2Scene from '@/components/M2Q2Scene';
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const searchParams = useSearchParams();
+  const [currentScene, setCurrentScene] = useState('welcome');
+  const [userData, setUserData] = useState({ name: '', email: '' });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  // Handle URL parameters on initial load
+  useEffect(() => {
+    const scene = searchParams.get('scene');
+    const name = searchParams.get('name');
+    
+    if (scene === 'meeting-cover') {
+      setCurrentScene('meeting-cover');
+      if (name) {
+        setUserData(prev => ({ ...prev, name: decodeURIComponent(name) }));
+      }
+    }
+  }, [searchParams]);
+
+  const handleWelcomeNext = () => {
+    setCurrentScene('registration');
+  };
+
+  const handleRegistrationBack = () => {
+    setCurrentScene('welcome');
+  };
+
+  const handleRegistrationSuccess = (formData: { name: string; email: string }) => {
+    setUserData(formData);
+    setCurrentScene('chat');
+  };
+
+  const handleChatBack = () => {
+    setCurrentScene('registration');
+  };
+
+  const handleMeetingCoverBack = () => {
+    setCurrentScene('chat');
+  };
+
+  const handleMeetingCoverNext = () => {
+    setCurrentScene('m1q1');
+  };
+
+  const handleM1Q1Back = () => {
+    setCurrentScene('meeting-cover');
+  };
+
+  const handleM1Q1Next = (selectedOption: string | null) => {
+    console.log('Selected option:', selectedOption);
+    setCurrentScene('m1q2');
+  };
+
+  const handleM1Q2Back = () => {
+    setCurrentScene('m1q1');
+  };
+
+  const handleM1Q2Next = (selectedOption: string | null) => {
+    console.log('Selected option M1Q2:', selectedOption);
+    setCurrentScene('m1q3');
+  };
+
+  const handleM1Q3Back = () => {
+    setCurrentScene('m1q2');
+  };
+
+  const handleM1Q3Next = () => {
+    setCurrentScene('meeting2-cover');
+  };
+
+  const handleMeeting2CoverBack = () => {
+    setCurrentScene('m1q3');
+  };
+
+  const handleMeeting2CoverNext = () => {
+    setCurrentScene('m2q1');
+  };
+
+  const handleM2Q1Back = () => {
+    setCurrentScene('meeting2-cover');
+  };
+
+  const handleM2Q1Next = () => {
+    setCurrentScene('m2q2');
+  };
+
+  const handleM2Q2Back = () => {
+    setCurrentScene('m2q1');
+  };
+
+  const handleM2Q2Next = () => {
+    console.log('Proceeding from M2Q2');
+    // Handle navigation to the next scene after M2Q2
+  };
+
+  return (
+    <main>
+      {currentScene === 'welcome' && <WelcomeScene onNext={handleWelcomeNext} />}
+      {currentScene === 'registration' && (
+        <RegistrationScene 
+          onBack={handleRegistrationBack} 
+          onRegisterSuccess={() => handleRegistrationSuccess(userData)} 
+        />
+      )}
+      {currentScene === 'chat' && (
+        <ChatScene 
+          userData={userData}
+          onBack={handleChatBack}
+          onNext={() => setCurrentScene('meeting-cover')}
+        />
+      )}
+      {currentScene === 'meeting-cover' && (
+        <MeetingCoverScene
+          userName={userData.name}
+          onBack={handleMeetingCoverBack}
+          onNext={handleMeetingCoverNext}
+        />
+      )}
+      {currentScene === 'm1q1' && (
+        <M1Q1Scene
+          userName={userData.name}
+          onBack={handleM1Q1Back}
+          onNext={handleM1Q1Next}
+        />
+      )}
+      {currentScene === 'm1q2' && (
+        <M1Q2Scene
+          userName={userData.name}
+          onBack={handleM1Q2Back}
+          onNext={handleM1Q2Next}
+        />
+      )}
+      {currentScene === 'm1q3' && (
+        <M1Q3Scene
+          userName={userData.name}
+          onBack={handleM1Q3Back}
+          onNext={handleM1Q3Next}
+        />
+      )}
+      {currentScene === 'meeting2-cover' && (
+        <Meeting2CoverScene
+          userName={userData.name}
+          onBack={handleMeeting2CoverBack}
+          onNext={handleMeeting2CoverNext}
+        />
+      )}
+      {currentScene === 'm2q1' && (
+        <M2Q1Scene
+          userName={userData.name}
+          onBack={handleM2Q1Back}
+          onNext={handleM2Q1Next}
+        />
+      )}
+      {currentScene === 'm2q2' && (
+        <M2Q2Scene
+          userName={userData.name}
+          onBack={handleM2Q2Back}
+          onNext={handleM2Q2Next}
+        />
+      )}
+    </main>
   );
 }
