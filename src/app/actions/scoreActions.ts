@@ -28,6 +28,8 @@ async function getPersonIdFromCookies(): Promise<string | null> {
   return data?.[0]?.id || null
 }
 
+import { gradeEssay } from '@/lib/openai';
+
 export async function saveM3Q2Feedback(essayAnswer: string) {
   const personId = await getPersonIdFromCookies()
 
@@ -35,10 +37,12 @@ export async function saveM3Q2Feedback(essayAnswer: string) {
     return { error: 'Person ID not found.' }
   }
 
+  const gradedScore = await gradeEssay(essayAnswer);
+
   const { data, error } = await supabase
     .from('score')
     .upsert(
-      { person: personId, essay_answer: essayAnswer },
+      { person: personId, essay_answer: essayAnswer, meeting_three_score: gradedScore },
       { onConflict: 'person' } // Assumes 'person' column has a UNIQUE constraint
     )
     .select()
