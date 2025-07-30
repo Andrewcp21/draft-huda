@@ -4,9 +4,9 @@
   flex-direction: column;
   height: 100vh; /* Full viewport height */
   width: 100%;
-  max-width: 600px; /* Max width like a mobile chat app */
+  max-width: 400px; /* Max width like a mobile chat app */
   margin: 0 auto; /* Center on larger screens */
-  background-color: #ECE5DD; /* Light, warm background */
+  background-color: #FFDE3D; /* Light, warm background */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   overflow: hidden; /* Hide overflow for smooth scrolling */
   position: relative;
