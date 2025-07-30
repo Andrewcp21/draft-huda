@@ -103,3 +103,27 @@ export async function saveMeetingTwoScore(score: number) {
 
   return { data }
 }
+
+export async function getScoresForCurrentUser(): Promise<{ meetingTwoScore: number | null; meetingThreeScore: number | null } | null> {
+  const personId = await getPersonIdFromCookies();
+
+  if (!personId) {
+    return null;
+  }
+
+  const { data, error } = await supabase
+    .from('score')
+    .select('meeting_two_score, meeting_three_score')
+    .eq('person', personId)
+    .single();
+
+  if (error) {
+    console.error('Error fetching scores for current user:', error);
+    return null;
+  }
+
+  return {
+    meetingTwoScore: data?.meeting_two_score || null,
+    meetingThreeScore: data?.meeting_three_score || null,
+  };
+}
