@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee, faPaperPlane, faArrowLeft, faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, faPaperPlane, faArrowLeft, faCheck, faCheckDouble, faPlus, faPaperclip, faCamera, faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 import styles from './ChatScene.module.css';
 import QuizResultPopup from './QuizResultPopup';
@@ -269,16 +269,32 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
       {/* Response options */}
       {messages.length > 0 && messages[messages.length - 1].responses && !isTyping && (
         <div className={styles.chatInputArea}>
-          <div className={styles.responseButtons}>
-            {messages[messages.length - 1].responses?.map((response, index) => (
-              <button
-                key={index}
-                onClick={() => handleResponse(response)}
-                className={styles.responseButton}
-              >
-                {response}
-              </button>
-            ))}
+          <div className={styles.responseContainer}>
+            <button className={styles.inputIcon}>
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+            <div className={styles.responseButtons}>
+              {messages[messages.length - 1].responses?.map((response, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleResponse(response)}
+                  className={styles.responseButton}
+                >
+                  {response}
+                </button>
+              ))}
+            </div>
+            <div className={styles.inputIcons}>
+              <span className={styles.inputIcon}>
+                <FontAwesomeIcon icon={faPaperclip} />
+              </span>
+              <span className={styles.inputIcon}>
+                <FontAwesomeIcon icon={faCamera} />
+              </span>
+              <span className={styles.inputIcon}>
+                <FontAwesomeIcon icon={faMicrophone} />
+              </span>
+            </div>
           </div>
         </div>
       )}
