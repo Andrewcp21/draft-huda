@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { FaArrowLeft, FaArrowRight, FaHeart, FaComment } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 
 interface M2Q7SceneProps {
@@ -9,17 +9,9 @@ interface M2Q7SceneProps {
   onNext: (selectedOption: string | null) => void;
 }
 
-const M2Q7Scene: React.FC<M2Q7SceneProps> = ({ userName, onBack, onNext }) => {
+const M2Q7Scene: React.FC<M2Q7SceneProps> = ({ onBack, onNext }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 100);
-    
-    return () => clearTimeout(timer);
-  }, []);
+  // Removed unused state and effect
 
   const handleAnswer = (optionId: string) => {
     setSelectedOption(optionId);

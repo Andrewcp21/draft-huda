@@ -39,7 +39,7 @@ const M2Q1Scene: React.FC<M2Q1SceneProps> = ({ userName, onBack, onNext }) => {
       if (num === '.' && currentValue.includes('.')) {
         return;
       }
-      let newValue = currentValue === '0' && num !== '.' ? String(num) : currentValue + String(num);
+      const newValue = currentValue === '0' && num !== '.' ? String(num) : currentValue + String(num);
       setDisplay(newValue);
       setCurrentValue(newValue);
     }

@@ -5,12 +5,11 @@ import styles from './M1Q2Scene.module.css';
 import QuizResultPopup from './QuizResultPopup';
 
 interface M1Q2SceneProps {
-  userName: string;
   onBack: () => void;
   onNext: (selectedOption: string | null) => void;
 }
 
-const M1Q2Scene: React.FC<M1Q2SceneProps> = ({ userName, onBack, onNext }) => {
+const M1Q2Scene: React.FC<M1Q2SceneProps> = ({ onBack, onNext }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [showPopup, setShowPopup] = useState<'none' | 'correct' | 'wrong'>('none');
@@ -70,7 +69,7 @@ const M1Q2Scene: React.FC<M1Q2SceneProps> = ({ userName, onBack, onNext }) => {
       <div className="flex-grow w-full max-w-md mx-auto flex flex-col pt-20 px-4 pb-4 overflow-y-auto">
         <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg flex-grow flex flex-col">
           <p className="text-gray-800 text-base sm:text-lg mb-4 text-left font-medium">
-            Oke, mengerti. Lalu, gini nih, kalau ada pelanggan yang lagi cari 'kopi enak' atau 'bunga segar' di internet. Menurut Kamu, cara apa yang paling jitu biar kafe kami langsung mudah ditemukan di internet?
+            Oke, mengerti. Lalu, gini nih, kalau ada pelanggan yang lagi cari &apos;kopi enak&apos; atau &apos;bunga segar&apos; di internet. Menurut Kamu, cara apa yang paling jitu biar kafe kami langsung mudah ditemukan di internet?
           </p>
 
           <div className="flex flex-col gap-3 sm:gap-4 mt-auto">

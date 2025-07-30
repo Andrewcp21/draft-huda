@@ -18,12 +18,11 @@ interface DropSlot {
 }
 
 interface M1Q3SceneProps {
-  userName: string;
   onBack: () => void;
   onNext: () => void;
 }
 
-const M1Q3Scene: React.FC<M1Q3SceneProps> = ({ userName, onBack, onNext }) => {
+const M1Q3Scene: React.FC<M1Q3SceneProps> = ({ onBack, onNext }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [showPopup, setShowPopup] = useState<'none' | 'correct' | 'wrong'>('none');
 

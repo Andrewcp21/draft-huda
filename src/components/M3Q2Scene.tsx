@@ -9,18 +9,10 @@ interface M3Q2SceneProps {
   onNext: (feedback: string | null) => void;
 }
 
-const M3Q2Scene: React.FC<M3Q2SceneProps> = ({ userName, onBack, onNext }) => {
+const M3Q2Scene: React.FC<M3Q2SceneProps> = ({ onBack, onNext }) => {
   const [feedback, setFeedback] = useState<string>('');
-  const [isVisible, setIsVisible] = useState(false);
+  const isVisible = true;
   const maxLength = 150;
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 100);
-    
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleNext = () => {
     onNext(feedback);
@@ -47,7 +39,7 @@ const M3Q2Scene: React.FC<M3Q2SceneProps> = ({ userName, onBack, onNext }) => {
         <div className="w-full bg-white rounded-2xl p-4 sm:p-6 shadow-lg">
           <div className="relative w-full h-64 sm:h-80 mb-4 rounded-xl overflow-hidden bg-gray-100">
             <Image
-              src="/poster1.png"
+              src="/Poster1.png"
               alt="Poster Design"
               layout="fill"
               objectFit="contain"

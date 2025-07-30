@@ -8,7 +8,7 @@ interface M3Q1SceneProps {
   onNext: () => void;
 }
 
-const M3Q1Scene: React.FC<M3Q1SceneProps> = ({ userName, onBack, onNext }) => {
+const M3Q1Scene: React.FC<M3Q1SceneProps> = ({ onBack, onNext }) => {
   // Array of speech bubble texts with markdown-style bold formatting
   const speechBubbles = [
     "Nah, jadi minggu depan kami mau membuat **Festival Mekar & Kopi Musim Semi** nih.",

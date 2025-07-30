@@ -9,18 +9,10 @@ interface M3Q3SceneProps {
   onNext: (feedback: string | null) => void;
 }
 
-const M3Q3Scene: React.FC<M3Q3SceneProps> = ({ userName, onBack, onNext }) => {
+const M3Q3Scene: React.FC<M3Q3SceneProps> = ({ onBack, onNext }) => {
   const [feedback, setFeedback] = useState<string>('');
-  const [isVisible, setIsVisible] = useState(false);
+  const isVisible = true;
   const maxLength = 150;
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 100);
-    
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleNext = () => {
     onNext(feedback);

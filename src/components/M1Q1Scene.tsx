@@ -5,12 +5,11 @@ import styles from './M1Q1Scene.module.css';
 import QuizResultPopup from './QuizResultPopup';
 
 interface M1Q1SceneProps {
-  userName: string;
   onBack: () => void;
   onNext: (selectedOption: string | null) => void;
 }
 
-const M1Q1Scene: React.FC<M1Q1SceneProps> = ({ userName, onBack, onNext }) => {
+const M1Q1Scene: React.FC<M1Q1SceneProps> = ({ onBack, onNext }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [showPopup, setShowPopup] = useState<'none' | 'correct' | 'wrong'>('none');

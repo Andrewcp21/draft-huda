@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee, faPaperPlane, faArrowLeft, faCheck, faCheckDouble, faPlus, faPaperclip, faCamera, faMicrophone } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCheckDouble, faPlus, faPaperclip, faCamera, faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 import styles from './ChatScene.module.css';
 import QuizResultPopup from './QuizResultPopup';
@@ -15,7 +15,7 @@ interface Message {
 }
 
 interface ChatSceneProps {
-  userData: Record<string, any> | null;
+  userData: { name?: string } | null;
   onBack: () => void;
   onNext?: () => void;
 }
@@ -24,7 +24,7 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [showInvitation, setShowInvitation] = useState(false);
-  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  // Removed unused state
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Conversation script with predefined responses
@@ -139,7 +139,7 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
   };
 
   // Simulate bot typing and send message
-  const sendBotMessage = (message: Message) => {
+  const sendBotMessage = useCallback((message: Message) => {
     setIsTyping(true);
     setTimeout(() => {
       setIsTyping(false);
@@ -159,19 +159,7 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
         setTimeout(() => setShowInvitation(true), 1000);
       }
     }, 1500);
-  };
-
-  // Effect to handle the first message when component mounts
-  useEffect(() => {
-    if (messages.length === 0 && conversation.length > 0) {
-      // Only send the first message automatically
-      const timer = setTimeout(() => {
-        setMessages([conversation[0]]);
-      }, 1000);
-      
-      return () => clearTimeout(timer);
-    }
-  }, []);
+  }, [conversation]);
 
   // Start with first message when component mounts
   useEffect(() => {
@@ -183,7 +171,7 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
       
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [messages.length, conversation]);
 
   // Auto-scroll when messages change
   useEffect(() => {

@@ -9,8 +9,8 @@ interface M2Q5SceneProps {
   onNext: () => void;
 }
 
-const M2Q5Scene: React.FC<M2Q5SceneProps> = ({ userName, onBack, onNext }) => {
-  const [isVisible, setIsVisible] = useState(false);
+const M2Q5Scene: React.FC<M2Q5SceneProps> = ({ onBack, onNext }) => {
+  // Removed unused state
   const [isNotificationVisible, setNotificationVisible] = useState(true);
   const [display, setDisplay] = useState('0');
   const [currentValue, setCurrentValue] = useState('');
@@ -21,11 +21,9 @@ const M2Q5Scene: React.FC<M2Q5SceneProps> = ({ userName, onBack, onNext }) => {
   const fullText = "Sedikit lagi kawan! Gunakan kalkulator untuk menjawab ya.";
 
   useEffect(() => {
-    const sceneTimer = setTimeout(() => setIsVisible(true), 100);
     const notificationTimer = setTimeout(() => setNotificationVisible(false), 8000);
 
     return () => {
-      clearTimeout(sceneTimer);
       clearTimeout(notificationTimer);
     };
   }, []);
@@ -39,7 +37,7 @@ const M2Q5Scene: React.FC<M2Q5SceneProps> = ({ userName, onBack, onNext }) => {
       if (num === '.' && currentValue.includes('.')) {
         return;
       }
-      let newValue = currentValue === '0' && num !== '.' ? String(num) : currentValue + String(num);
+      const newValue = currentValue === '0' && num !== '.' ? String(num) : currentValue + String(num);
       setDisplay(newValue);
       setCurrentValue(newValue);
     }
