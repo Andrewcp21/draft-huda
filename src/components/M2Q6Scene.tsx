@@ -3,10 +3,12 @@ import Image from 'next/image';
 import { FaArrowLeft, FaArrowRight, FaHeart, FaComment } from 'react-icons/fa';
 import styles from './M2Q6Scene.module.css';
 
+import { correctAnswers } from '@/lib/answers';
+
 interface M2Q6SceneProps {
   userName: string;
   onBack: () => void;
-  onNext: (selectedOption: string | null) => void;
+  onNext: (score: number) => void;
 }
 
 const M2Q6Scene: React.FC<M2Q6SceneProps> = ({ userName, onBack, onNext }) => {
@@ -27,7 +29,8 @@ const M2Q6Scene: React.FC<M2Q6SceneProps> = ({ userName, onBack, onNext }) => {
   };
 
   const handleNext = () => {
-    onNext(selectedOption);
+    const score = (selectedOption === correctAnswers.M2Q6) ? 1 : 0;
+    onNext(score);
   };
 
   const options = [

@@ -18,14 +18,14 @@ async function getPersonIdFromCookies(): Promise<string | null> {
     .select('id')
     .eq('name', userName)
     .eq('email', userEmail)
-    .single()
+    .limit(1)
 
   if (error) {
     console.error('Error fetching person ID:', error)
     return null
   }
 
-  return data?.id || null
+  return data?.[0]?.id || null
 }
 
 export async function saveM3Q2Feedback(essayAnswer: string) {
@@ -70,6 +70,30 @@ export async function saveM3Q3Feedback(motivationAnswer: string) {
 
   if (error) {
     console.error('Error saving M3Q3 feedback:', error)
+    return { error }
+  }
+
+  return { data }
+}
+
+export async function saveMeetingTwoScore(score: number) {
+  const personId = await getPersonIdFromCookies()
+
+  if (!personId) {
+    return { error: 'Person ID not found.' }
+  }
+
+  const { data, error } = await supabase
+    .from('score')
+    .upsert(
+      { person: personId, meeting_two_score: score },
+      { onConflict: 'person' }
+    )
+    .select()
+    .single()
+
+  if (error) {
+    console.error('Error saving Meeting Two score:', error)
     return { error }
   }
 
