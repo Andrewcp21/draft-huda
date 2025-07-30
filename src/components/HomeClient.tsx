@@ -24,6 +24,7 @@ import M3Q1Scene from '@/components/M3Q1Scene';
 import M3Q2Scene from '@/components/M3Q2Scene';
 import M3Q3Scene from '@/components/M3Q3Scene';
 import ClosingScene from '@/components/ClosingScene';
+import Cookies from 'js-cookie';
 
 export default function HomeClient() {
   const searchParams = useSearchParams();
@@ -35,12 +36,17 @@ export default function HomeClient() {
     console.log(`Scene changed to: ${currentScene}`);
   }, [currentScene]);
 
-  // Handle URL parameters on initial load
+  // Handle URL parameters and cookies on initial load
   useEffect(() => {
     const scene = searchParams.get('scene');
     const name = searchParams.get('name');
-    
-    if (scene === 'meeting-cover') {
+    const storedName = Cookies.get('userName');
+    const storedEmail = Cookies.get('userEmail');
+
+    if (storedName && storedEmail) {
+      setUserData({ name: storedName, email: storedEmail });
+      setCurrentScene('chat');
+    } else if (scene === 'meeting-cover') {
       setCurrentScene('meeting-cover');
       if (name) {
         setUserData(prev => ({ ...prev, name: decodeURIComponent(name) }));

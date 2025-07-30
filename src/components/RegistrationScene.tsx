@@ -1,8 +1,9 @@
-import React, { useState, useTransition } from 'react';
+import React, { useState, useEffect, useTransition } from 'react';
 import Image from 'next/image';
 import { FaCheckCircle, FaTimes } from 'react-icons/fa';
 import QuizResultPopup from './QuizResultPopup';
 import { createPersonalDetails } from '@/app/actions/actions';
+import Cookies from 'js-cookie';
 
 interface RegistrationSceneProps {
   onBack: () => void;
@@ -13,6 +14,14 @@ const RegistrationScene: React.FC<RegistrationSceneProps> = ({ onBack, onNext })
   const [isPending, startTransition] = useTransition();
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '' });
+
+  useEffect(() => {
+    const storedName = Cookies.get('userName');
+    const storedEmail = Cookies.get('userEmail');
+    if (storedName && storedEmail) {
+      setFormData({ name: storedName, email: storedEmail });
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
