@@ -56,7 +56,7 @@ export default function HomeClient() {
     setCurrentScene('welcome');
   };
 
-  const handleRegistrationSuccess = (formData: { name: string; email: string }) => {
+  const handleRegistrationNext = (formData: { name: string; email: string }) => {
     setUserData(formData);
     setCurrentScene('chat');
   };
@@ -232,7 +232,7 @@ export default function HomeClient() {
       {currentScene === 'registration' && (
         <RegistrationScene 
           onBack={handleRegistrationBack} 
-          onRegisterSuccess={() => handleRegistrationSuccess(userData)} 
+          onNext={handleRegistrationNext} 
         />
       )}
       {currentScene === 'chat' && (

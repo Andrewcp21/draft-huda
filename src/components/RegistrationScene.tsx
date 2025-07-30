@@ -1,37 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import Image from 'next/image';
 import { FaCheckCircle, FaTimes } from 'react-icons/fa';
 import QuizResultPopup from './QuizResultPopup';
+import { createPersonalDetails } from '@/app/actions/actions';
 
 interface RegistrationSceneProps {
   onBack: () => void;
-  onRegisterSuccess: (data: { name: string; email: string }) => void;
+  onNext: (data: { name: string; email: string }) => void;
 }
 
-const RegistrationScene: React.FC<RegistrationSceneProps> = ({ onBack, onRegisterSuccess }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: ''
-  });
+const RegistrationScene: React.FC<RegistrationSceneProps> = ({ onBack, onNext }) => {
+  const [isPending, startTransition] = useTransition();
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '' });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    setShowSuccessPopup(true);
+    startTransition(async () => {
+      const formData = new FormData(e.target as HTMLFormElement);
+      const result = await createPersonalDetails(formData);
+      if (!result?.error) {
+        setShowSuccessPopup(true);
+      }
+    });
   };
 
   const handleProceed = () => {
     setShowSuccessPopup(false);
-    onRegisterSuccess(formData);
+    onNext(formData);
   };
 
   return (
