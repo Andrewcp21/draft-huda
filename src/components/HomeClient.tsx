@@ -212,9 +212,8 @@ export default function HomeClient() {
     setCurrentScene('m3q1');
   };
 
-  const handleM3Q2Next = (feedback: string | null) => {
+  const handleM3Q2Next = () => {
     console.log('M3Q2 - Next button clicked');
-    console.log('Feedback:', feedback);
     setCurrentScene('m3q3');
   };
 
@@ -222,9 +221,8 @@ export default function HomeClient() {
     setCurrentScene('m3q2');
   };
 
-  const handleM3Q3Next = (feedback: string | null) => {
+  const handleM3Q3Next = () => {
     console.log('M3Q3 - Next button clicked');
-    console.log('Feedback:', feedback);
     setCurrentScene('closing');
   };
 
