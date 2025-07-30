@@ -61,7 +61,7 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
       text: `Sudah, Anggaran kami ada di Rp.5.000.000 per bulan, apakah ${userData?.name || 'Anda'} bisa membantu?`,
       sender: 'bot',
       timestamp: new Date(),
-      responses: ['Tentu saja!', 'Maaf, saya tidak bisa membantu']
+      responses: ['Tentu saja!']
     },
     { 
       id: 6,

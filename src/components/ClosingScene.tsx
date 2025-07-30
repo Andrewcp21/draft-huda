@@ -23,12 +23,12 @@ const ClosingScene: React.FC<ClosingSceneProps> = ({ userName }) => {
     // Timer to start confetti after the first animation completes (1s delay + 1s duration)
     const confettiTimer = setTimeout(() => {
       setRunConfetti(true);
-    }, 2000);
+    }, 1000);
 
     // Stop confetti after 5 seconds of running
     const stopConfettiTimer = setTimeout(() => {
       setRunConfetti(false);
-    }, 10000); // 2s start + 8s duration
+    }, 10000); // 1s start + 8s duration
 
     return () => {
       clearTimeout(animationTimer);
