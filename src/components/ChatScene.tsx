@@ -207,7 +207,13 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
         </button>
         <div className={styles.chatTitle}>
           <div className={styles.chatIcon}>
-            <FontAwesomeIcon icon={faCoffee} />
+            <Image 
+              src="/Ayu.png" 
+              alt="Profile" 
+              width={40} 
+              height={40} 
+              className={styles.profileImage}
+            />
           </div>
           <div className={styles.chatTitleText}>
             <h2>Kopi & Bunga Melati</h2>
