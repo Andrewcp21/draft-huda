@@ -60,7 +60,7 @@ const ClosingScene: React.FC<ClosingSceneProps> = ({ userName }) => {
         
         {/* Thank you message */}
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
-          Terima kasih, {userName}!
+          Terima kasih {userName}!
         </h1>
         
         <p className="text-gray-600 mb-4 text-base sm:text-base">

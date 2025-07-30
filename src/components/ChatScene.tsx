@@ -255,37 +255,45 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
       </div>
 
       {/* Response options */}
-      {messages.length > 0 && messages[messages.length - 1].responses && !isTyping && (
-        <div className={styles.chatInputArea}>
-          <div className={styles.responseContainer}>
-            <button className={styles.inputIcon}>
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-            <div className={styles.responseButtons}>
-              {messages[messages.length - 1].responses?.map((response, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleResponse(response)}
-                  className={styles.responseButton}
-                >
-                  {response}
-                </button>
-              ))}
-            </div>
-            <div className={styles.inputIcons}>
-              <span className={styles.inputIcon}>
-                <FontAwesomeIcon icon={faPaperclip} />
-              </span>
-              <span className={styles.inputIcon}>
-                <FontAwesomeIcon icon={faCamera} />
-              </span>
-              <span className={styles.inputIcon}>
-                <FontAwesomeIcon icon={faMicrophone} />
-              </span>
+      {(() => {
+        const lastBotMessageWithResponses = [...messages].reverse().find(msg => msg.sender === 'bot' && msg.responses);
+        const lastBotMessage = [...messages].reverse().find(msg => msg.sender === 'bot');
+
+        if (lastBotMessageWithResponses && lastBotMessage?.id === lastBotMessageWithResponses.id) {
+          return (
+          <div className={styles.chatInputArea} style={{ position: 'sticky', bottom: 0 }}>
+            <div className={styles.responseContainer}>
+              <button className={styles.inputIcon}>
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+              <div className={styles.responseButtons}>
+                {lastBotMessageWithResponses.responses?.map((response, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleResponse(response)}
+                    className={styles.responseButton}
+                  >
+                    {response}
+                  </button>
+                ))}
+              </div>
+              <div className={styles.inputIcons}>
+                <span className={styles.inputIcon}>
+                  <FontAwesomeIcon icon={faPaperclip} />
+                </span>
+                <span className={styles.inputIcon}>
+                  <FontAwesomeIcon icon={faCamera} />
+                </span>
+                <span className={styles.inputIcon}>
+                  <FontAwesomeIcon icon={faMicrophone} />
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+          );
+        }
+        return null;
+      })()}
 
       <QuizResultPopup isVisible={showInvitation} onClose={handleProceedToMeeting}>
         <div className="bg-white rounded-2xl w-full max-w-md overflow-hidden">
