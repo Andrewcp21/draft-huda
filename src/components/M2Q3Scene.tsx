@@ -4,10 +4,12 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import styles from './M2Q3Scene.module.css';
 
 
+import { correctAnswers } from '@/lib/answers';
+
 interface M2Q3SceneProps {
   userName: string;
   onBack: () => void;
-  onNext: (selectedOption: string | null) => void;
+  onNext: (score: number) => void;
 }
 
 const M2Q3Scene: React.FC<M2Q3SceneProps> = ({ userName, onBack, onNext }) => {
@@ -27,7 +29,8 @@ const M2Q3Scene: React.FC<M2Q3SceneProps> = ({ userName, onBack, onNext }) => {
   };
 
   const handleNext = () => {
-    onNext(selectedOption);
+    const score = (selectedOption === correctAnswers.M2Q3) ? 1 : 0;
+    onNext(score);
   };
 
   return (

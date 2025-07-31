@@ -1,21 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useTransition } from 'react';
 import Image from 'next/image';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import styles from './M3Q2Scene.module.css';
+import { saveM3Q2Feedback } from '@/app/actions/scoreActions';
 
 interface M3Q2SceneProps {
   userName: string;
   onBack: () => void;
-  onNext: (feedback: string | null) => void;
+  onNext: () => void;
 }
 
 const M3Q2Scene: React.FC<M3Q2SceneProps> = ({ onBack, onNext }) => {
   const [feedback, setFeedback] = useState<string>('');
+  const [isPending, startTransition] = useTransition();
   const isVisible = true;
   const maxLength = 150;
 
-  const handleNext = () => {
-    onNext(feedback);
+  const handleNext = async () => {
+    startTransition(async () => {
+      await saveM3Q2Feedback(feedback);
+      onNext();
+    });
   };
 
   return (

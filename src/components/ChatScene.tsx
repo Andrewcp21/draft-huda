@@ -24,8 +24,8 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [showInvitation, setShowInvitation] = useState(false);
-  // Removed unused state
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const nextId = useRef(100); // Start with a high number to avoid collisions
 
   // Conversation script with predefined responses
   const conversation: Message[] = [
@@ -80,7 +80,7 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
   // Handle user response
   const handleResponse = (response: string) => {
     const newMessage: Message = {
-      id: messages.length + 1,
+      id: nextId.current++,
       text: response,
       sender: 'user',
       timestamp: new Date()
@@ -107,7 +107,7 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
           // If the next message doesn't require a response and isn't the last message,
           // automatically send the next bot message
           if (!nextMessage.responses && nextMessage.id < conversation.length) {
-            const followingMessage = conversation[nextMessage.id]; // Next message has ID = current ID + 1
+            const followingMessage = conversation.find(msg => msg.id === nextMessage.id + 1);
             if (followingMessage) {
               setTimeout(() => setMessages(prev => [...prev, followingMessage]), 1000);
             }
@@ -148,7 +148,7 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
       // If this bot message doesn't require a response and isn't the last message,
       // automatically send the next bot message
       if (!message.responses && !message.showInvitation && message.id < conversation.length) {
-        const nextMessage = conversation[message.id]; // Next message has ID = current ID + 1
+        const nextMessage = conversation.find(msg => msg.id === message.id + 1);
         if (nextMessage) {
           setTimeout(() => sendBotMessage(nextMessage), 1000);
         }

@@ -24,23 +24,31 @@ import M3Q1Scene from '@/components/M3Q1Scene';
 import M3Q2Scene from '@/components/M3Q2Scene';
 import M3Q3Scene from '@/components/M3Q3Scene';
 import ClosingScene from '@/components/ClosingScene';
+import Cookies from 'js-cookie';
+import { saveMeetingTwoScore } from '@/app/actions/scoreActions';
 
 export default function HomeClient() {
   const searchParams = useSearchParams();
   const [currentScene, setCurrentScene] = useState('welcome');
   const [userData, setUserData] = useState({ name: '', email: '' });
+  const [meetingTwoScore, setMeetingTwoScore] = useState(0);
 
   // Log scene changes for debugging
   useEffect(() => {
     console.log(`Scene changed to: ${currentScene}`);
   }, [currentScene]);
 
-  // Handle URL parameters on initial load
+  // Handle URL parameters and cookies on initial load
   useEffect(() => {
     const scene = searchParams.get('scene');
     const name = searchParams.get('name');
-    
-    if (scene === 'meeting-cover') {
+    const storedName = Cookies.get('userName');
+    const storedEmail = Cookies.get('userEmail');
+
+    if (storedName && storedEmail) {
+      setUserData({ name: storedName, email: storedEmail });
+      setCurrentScene('chat');
+    } else if (scene === 'meeting-cover') {
       setCurrentScene('meeting-cover');
       if (name) {
         setUserData(prev => ({ ...prev, name: decodeURIComponent(name) }));
@@ -56,7 +64,7 @@ export default function HomeClient() {
     setCurrentScene('welcome');
   };
 
-  const handleRegistrationSuccess = (formData: { name: string; email: string }) => {
+  const handleRegistrationNext = (formData: { name: string; email: string }) => {
     setUserData(formData);
     setCurrentScene('chat');
   };
@@ -115,7 +123,8 @@ export default function HomeClient() {
     setCurrentScene('meeting2-cover');
   };
 
-  const handleM2Q1Next = () => {
+  const handleM2Q1Next = (score: number) => {
+    setMeetingTwoScore(prev => prev + score);
     setCurrentScene('m2q2');
   };
 
@@ -123,7 +132,8 @@ export default function HomeClient() {
     setCurrentScene('m2q1');
   };
 
-  const handleM2Q2Next = () => {
+  const handleM2Q2Next = (score: number) => {
+    setMeetingTwoScore(prev => prev + score);
     setCurrentScene('m2q3');
   };
 
@@ -131,7 +141,8 @@ export default function HomeClient() {
     setCurrentScene('m2q2');
   };
 
-  const handleM2Q3Next = (selectedOption: string | null) => {
+  const handleM2Q3Next = (score: number) => {
+    setMeetingTwoScore(prev => prev + score);
     setCurrentScene('m2q4');
   };
 
@@ -139,48 +150,40 @@ export default function HomeClient() {
     setCurrentScene('m2q3');
   };
 
-  const handleM2Q4Next = (selectedOption: string | null) => {
-    console.log('M2Q4 - Next button clicked, selected option:', selectedOption);
-    console.log('Navigating to M2Q5');
+  const handleM2Q4Next = (score: number) => {
+    setMeetingTwoScore(prev => prev + score);
     setCurrentScene('m2q5');
   };
 
   const handleM2Q5Back = () => {
-    console.log('M2Q5 - Back button clicked');
-    console.log('Navigating to M2Q4');
     setCurrentScene('m2q4');
   };
 
-  const handleM2Q5Next = () => {
-    console.log('M2Q5 - Next button clicked');
-    console.log('Navigating to M2Q6');
+  const handleM2Q5Next = (score: number) => {
+    setMeetingTwoScore(prev => prev + score);
     setCurrentScene('m2q6');
   };
 
   const handleM2Q6Back = () => {
-    console.log('M2Q6 - Back button clicked');
-    console.log('Navigating to M2Q5');
     setCurrentScene('m2q5');
   };
 
-  const handleM2Q6Next = (selectedOption: string | null) => {
-    console.log('M2Q6 - Next button clicked, selected option:', selectedOption);
-    console.log('Navigating to M2Q7');
+  const handleM2Q6Next = (score: number) => {
+    setMeetingTwoScore(prev => prev + score);
     setCurrentScene('m2q7');
   };
 
   const handleM2Q7Back = () => {
-    console.log('M2Q7 - Back button clicked');
     setCurrentScene('m2q6');
   };
 
-  const handleM2Q7Next = (selectedOption: string | null) => {
-    console.log('M2Q7 - Next button clicked, selected option:', selectedOption);
-    console.log('Navigating to m2tom3-transition');
+  const handleM2Q7Next = (score: number) => {
+    setMeetingTwoScore(prev => prev + score);
     setCurrentScene('m2tom3-transition');
   };
 
-  const handleM2ToM3TransitionNext = () => {
+  const handleM2ToM3TransitionNext = async () => {
+    await saveMeetingTwoScore(meetingTwoScore);
     setCurrentScene('meeting3-cover');
   };
 
@@ -206,9 +209,8 @@ export default function HomeClient() {
     setCurrentScene('m3q1');
   };
 
-  const handleM3Q2Next = (feedback: string | null) => {
+  const handleM3Q2Next = () => {
     console.log('M3Q2 - Next button clicked');
-    console.log('Feedback:', feedback);
     setCurrentScene('m3q3');
   };
 
@@ -216,9 +218,8 @@ export default function HomeClient() {
     setCurrentScene('m3q2');
   };
 
-  const handleM3Q3Next = (feedback: string | null) => {
+  const handleM3Q3Next = () => {
     console.log('M3Q3 - Next button clicked');
-    console.log('Feedback:', feedback);
     setCurrentScene('closing');
   };
 
@@ -232,7 +233,7 @@ export default function HomeClient() {
       {currentScene === 'registration' && (
         <RegistrationScene 
           onBack={handleRegistrationBack} 
-          onRegisterSuccess={() => handleRegistrationSuccess(userData)} 
+          onNext={handleRegistrationNext} 
         />
       )}
       {currentScene === 'chat' && (

@@ -2,18 +2,46 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Confetti from 'react-confetti';
+import Cookies from 'js-cookie';
+import { getScoresForCurrentUser } from '@/app/actions/scoreActions';
+import { getMarketerTypeAndImage } from '@/utils/marketerTypeCalculator';
 
 interface ClosingSceneProps {
   userName: string;
 }
 
 const ClosingScene: React.FC<ClosingSceneProps> = ({ userName }) => {
-    const [isAnimated, setIsAnimated] = useState(false);
+  const [isAnimated, setIsAnimated] = useState(false);
   const [runConfetti, setRunConfetti] = useState(false);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [marketerType, setMarketerType] = useState({ type: 'Curious Marketer', imagePath: '/marketer-type/curious.svg' });
 
   useEffect(() => {
     setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+
+    const fetchAndSetMarketerType = async () => {
+      const scores = await getScoresForCurrentUser();
+      console.log('🔍 Debug - Retrieved scores:', scores);
+      if (scores) {
+        const { meetingTwoScore, meetingThreeScore } = scores;
+        console.log('🔍 Debug - Meeting 2 score:', meetingTwoScore);
+        console.log('🔍 Debug - Meeting 3 score:', meetingThreeScore);
+        const typeAndImage = getMarketerTypeAndImage(meetingTwoScore, meetingThreeScore);
+        console.log('🔍 Debug - Calculated marketer type:', typeAndImage);
+        setMarketerType(typeAndImage);
+        
+        // Clean up cookies after successfully fetching and calculating marketer type
+        Cookies.remove('userName');
+        Cookies.remove('userEmail');
+      } else {
+        console.log('🔍 Debug - No scores found, using default');
+        // Still clean up cookies even if no scores found
+        Cookies.remove('userName');
+        Cookies.remove('userEmail');
+      }
+    };
+
+    fetchAndSetMarketerType();
 
     // Timer for the image/text fade-in animation (starts after 1s)
     const animationTimer = setTimeout(() => {
@@ -67,19 +95,20 @@ const ClosingScene: React.FC<ClosingSceneProps> = ({ userName }) => {
           Kamu adalah seorang:
         </p>
         
-        {/* Animated GIF and Title */}
+        {/* Marketer Type Image and Title */}
         <div className={`w-full max-w-[240px] sm:max-w-[280px] mx-auto transition-all duration-1000 ease-out ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="aspect-square relative">
             <Image
-              src="/GIF/ezgif.com-animated-gif-maker-2.gif"
-              alt="Data-Aware Marketer"
+              src={marketerType.imagePath}
+              alt={marketerType.type}
               fill
               sizes="(max-width: 640px) 240px, 280px"
               className="object-contain"
               priority
+              unoptimized
             />
           </div>
-                    <p className="font-bold text-3xl mt-5">Data-Aware Marketer</p>
+          <p className="font-bold text-3xl mt-5">{marketerType.type}</p>
         </div>
         
         {/* Question */}

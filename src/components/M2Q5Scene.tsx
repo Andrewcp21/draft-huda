@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import styles from './M2Q5Scene.module.css';
 
+import { correctAnswers } from '@/lib/answers';
+
 interface M2Q5SceneProps {
   userName: string;
   onBack: () => void;
-  onNext: () => void;
+  onNext: (score: number) => void;
 }
 
 const M2Q5Scene: React.FC<M2Q5SceneProps> = ({ onBack, onNext }) => {
@@ -196,7 +198,12 @@ const M2Q5Scene: React.FC<M2Q5SceneProps> = ({ onBack, onNext }) => {
             <FaArrowLeft className="w-4 h-4" />
           </button>
           <button
-            onClick={onNext}
+            onClick={() => {
+              // Normalize the display value by removing trailing zeros and decimal points
+              const normalizedDisplay = parseFloat(display).toString();
+              const score = (normalizedDisplay === correctAnswers.M2Q5) ? 1 : 0;
+              onNext(score);
+            }}
             className='flex-1 h-12 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 shadow-md'>
             Selanjutnya
             <FaArrowRight className="w-4 h-4" />
