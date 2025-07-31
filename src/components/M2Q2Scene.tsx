@@ -198,7 +198,9 @@ const M2Q2Scene: React.FC<M2Q2SceneProps> = ({ onBack, onNext }) => {
           </button>
           <button 
             onClick={() => {
-              const score = (display === correctAnswers.M2Q2) ? 1 : 0;
+              // Normalize the display value by removing trailing zeros and decimal points
+              const normalizedDisplay = parseFloat(display).toString();
+              const score = (normalizedDisplay === correctAnswers.M2Q2) ? 1 : 0;
               onNext(score);
             }}
             className='flex-1 h-12 text-white font-semibold rounded-lg transition duration-200 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 shadow-md'>

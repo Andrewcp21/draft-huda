@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Confetti from 'react-confetti';
+import Cookies from 'js-cookie';
 import { getScoresForCurrentUser } from '@/app/actions/scoreActions';
 import { getMarketerTypeAndImage } from '@/utils/marketerTypeCalculator';
 
@@ -20,10 +21,23 @@ const ClosingScene: React.FC<ClosingSceneProps> = ({ userName }) => {
 
     const fetchAndSetMarketerType = async () => {
       const scores = await getScoresForCurrentUser();
+      console.log('🔍 Debug - Retrieved scores:', scores);
       if (scores) {
         const { meetingTwoScore, meetingThreeScore } = scores;
+        console.log('🔍 Debug - Meeting 2 score:', meetingTwoScore);
+        console.log('🔍 Debug - Meeting 3 score:', meetingThreeScore);
         const typeAndImage = getMarketerTypeAndImage(meetingTwoScore, meetingThreeScore);
+        console.log('🔍 Debug - Calculated marketer type:', typeAndImage);
         setMarketerType(typeAndImage);
+        
+        // Clean up cookies after successfully fetching and calculating marketer type
+        Cookies.remove('userName');
+        Cookies.remove('userEmail');
+      } else {
+        console.log('🔍 Debug - No scores found, using default');
+        // Still clean up cookies even if no scores found
+        Cookies.remove('userName');
+        Cookies.remove('userEmail');
       }
     };
 

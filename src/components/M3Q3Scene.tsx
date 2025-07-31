@@ -20,8 +20,7 @@ const M3Q3Scene: React.FC<M3Q3SceneProps> = ({ onBack, onNext }) => {
   const handleNext = async () => {
     startTransition(async () => {
       await saveM3Q3Feedback(feedback);
-      Cookies.remove('userName');
-      Cookies.remove('userEmail');
+      // Don't remove cookies here - ClosingScene needs them to fetch scores
       onNext();
     });
   };
