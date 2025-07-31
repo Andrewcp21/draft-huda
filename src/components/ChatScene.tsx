@@ -211,7 +211,7 @@ const ChatScene: React.FC<ChatSceneProps> = ({ userData, onBack, onNext }) => {
       </div>
 
       {/* Chat messages */}
-      <div className={styles.chatBody}>
+      <div className={styles.chatBody} style={{ backgroundColor: '#FFDE3D' }}>
         {messages.map((message) => (
           <div
             key={message.id}
