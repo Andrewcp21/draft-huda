@@ -45,79 +45,78 @@ const RegistrationScene: React.FC<RegistrationSceneProps> = ({ onBack, onNext })
   };
 
   return (
-    <div className="h-screen w-full flex flex-col items-center justify-between bg-[#FFDE3D] p-4 relative overflow-hidden">
-      <div className="w-full max-w-md mx-auto text-center flex flex-col items-center justify-center flex-grow px-4">
-        {/* Headline */}
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 px-2">
-          Kenalan dulu yuk!
-        </h2>
-        
-        {/* Animated GIF */}
-        <div className="w-full max-w-[280px] sm:max-w-[320px] mx-auto my-4 sm:my-6 aspect-square relative">
-          <Image
-            src="/GIF/ezgif.com-animated-gif-maker-5.gif"
-            alt="Registration"
-            fill
-            sizes="(max-width: 640px) 240px, 280px"
-            className="object-contain"
-            priority
-          />
+    <div className="h-screen w-full flex flex-col items-center justify-center bg-[#FFDE3D] p-4 relative overflow-hidden">
+      <div className="w-full max-w-md mx-auto">
+        <div className="text-center">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 px-2">
+            Kenalan dulu yuk!
+          </h2>
+          <div className="w-full max-w-[200px] sm:max-w-[240px] mx-auto my-2 aspect-square relative">
+            <Image
+              src="/GIF/ezgif.com-animated-gif-maker-5.gif"
+              alt="Registration"
+              fill
+              sizes="(max-width: 640px) 200px, 240px"
+              className="object-contain"
+              priority
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Form Box */}
-      <div className="w-full max-w-md mx-auto bg-white rounded-t-2xl shadow-lg p-6 sm:p-8">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                Nama
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                required
-                placeholder="Nama lengkap"
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email saat mendaftar di RevoU
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                required
-                placeholder="contoh@email.com"
-              />
-            </div>
-            
-            <div className="flex flex-row items-center gap-4 pt-2">
-              <button
-                type="button"
-                onClick={onBack}
-                className="p-3 text-gray-600 hover:text-gray-800 focus:outline-none rounded-full hover:bg-gray-100 flex-none"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-              </button>
-              <button
-                type="submit"
-                className="w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 flex items-center justify-center"
-              >
-                Lanjut <span className="ml-1">→</span>
-              </button>
-            </div>
-          </form>
+        {/* Form Box */}
+        <div className="w-full bg-white rounded-2xl shadow-lg p-6 sm:p-8 mt-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Nama
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  required
+                  placeholder="Nama lengkap"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  Email saat mendaftar di RevoU
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  required
+                  placeholder="contoh@email.com"
+                />
+              </div>
+              
+              <div className="flex flex-row items-center gap-4 pt-2">
+                <button
+                  type="button"
+                  onClick={onBack}
+                  className="p-3 text-gray-600 hover:text-gray-800 focus:outline-none rounded-full hover:bg-gray-100 flex-none"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  </svg>
+                </button>
+                <button
+                  type="submit"
+                  className="w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 flex items-center justify-center"
+                >
+                  Lanjut <span className="ml-1">→</span>
+                </button>
+              </div>
+            </form>
+        </div>
       </div>
 
       <QuizResultPopup isVisible={showSuccessPopup} onClose={handleProceed}>
